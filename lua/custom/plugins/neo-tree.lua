@@ -8,6 +8,29 @@ vim.pack.add {
 }
 
 require('neo-tree').setup {
+  enable_git_status = true,
+  source_selector = {
+    winbar = true,
+    sources = {
+      { source = 'filesystem', display_name = 'Files' },
+      { source = 'git_status', display_name = 'Git' },
+    },
+  },
+  default_component_configs = {
+    git_status = {
+      symbols = {
+        added = '+',
+        modified = '~',
+        deleted = '-',
+        renamed = 'R',
+        untracked = '?',
+        ignored = '!',
+        unstaged = 'U',
+        staged = 'S',
+        conflict = 'C',
+      },
+    },
+  },
   filesystem = {
     window = {
       mappings = {
@@ -17,4 +40,5 @@ require('neo-tree').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree reveal<CR>', { desc = 'Neo-tree reveal', silent = true })
+vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { desc = 'Toggle Neo-tree', silent = true })
+vim.keymap.set('n', '<leader>gs', '<Cmd>Neotree git_status<CR>', { desc = 'Neo-tree Git status', silent = true })
