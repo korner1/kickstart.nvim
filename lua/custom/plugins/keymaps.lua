@@ -14,3 +14,18 @@ vim.keymap.set('n', '<C-Right>', '<Cmd>vertical resize +2<CR>', {
 	desc = 'Grow window width',
 	silent = true,
 })
+
+local telescope_builtin = require 'telescope.builtin'
+
+vim.keymap.set('n', '<leader>b', telescope_builtin.buffers, {
+	desc = 'Find open [B]uffers',
+})
+
+vim.keymap.set('n', '<leader>sb', function()
+	telescope_builtin.live_grep {
+		grep_open_files = true,
+		prompt_title = 'Live Grep in Open Files',
+	}
+end, {
+	desc = '[S]earch open [B]uffers',
+})
