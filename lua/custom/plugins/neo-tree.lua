@@ -9,11 +9,13 @@ vim.pack.add {
 
 require('neo-tree').setup {
   enable_git_status = true,
+  sources = { 'filesystem', 'git_status', 'document_symbols' },
   source_selector = {
     winbar = true,
     sources = {
       { source = 'filesystem', display_name = 'Files' },
       { source = 'git_status', display_name = 'Git' },
+      { source = 'document_symbols', display_name = 'Symbols' },
     },
   },
   default_component_configs = {
@@ -38,7 +40,11 @@ require('neo-tree').setup {
       },
     },
   },
+  document_symbols = {
+    follow_cursor = true,
+  },
 }
 
 vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { desc = 'Toggle Neo-tree', silent = true })
 vim.keymap.set('n', '<leader>gs', '<Cmd>Neotree git_status<CR>', { desc = 'Neo-tree Git status', silent = true })
+vim.keymap.set('n', '<leader>cs', '<Cmd>Neotree toggle document_symbols<CR>', { desc = 'Toggle code symbols', silent = true })
