@@ -98,6 +98,9 @@ do
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
 
+  -- Make user-installed commands such as Yazi available to Neovim.
+  vim.env.PATH = vim.fs.joinpath(vim.env.HOME, 'bin') .. ':' .. vim.env.PATH
+
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = false
 
@@ -634,7 +637,16 @@ do
     },
   }
 
-  vim.keymap.set({ 'n', 'v' }, '<leader>-', '<cmd>Yazi<CR>', { desc = 'Open [Y]azi at the current file' })
+  local function open_yazi()
+    local path = vim.api.nvim_buf_get_name(0)
+    local is_real_file = vim.bo.buftype == '' and path ~= '' and not path:find('://', 1, true) and vim.uv.fs_stat(path) ~= nil
+
+    -- Special buffers such as Neo-tree have names that look like paths but do
+    -- not exist. Open Yazi in Neovim's cwd instead of passing that buffer name.
+    require('yazi').yazi(nil, is_real_file and path or vim.fn.getcwd())
+  end
+
+  vim.keymap.set({ 'n', 'v' }, '<leader>-', open_yazi, { desc = 'Open [Y]azi at the current file' })
   vim.keymap.set('n', '<leader>cw', '<cmd>Yazi cwd<CR>', { desc = 'Open Yazi in the current [W]orking directory' })
   vim.keymap.set('n', '<C-Up>', '<cmd>Yazi toggle<CR>', { desc = 'Resume the last Yazi session' })
 end
