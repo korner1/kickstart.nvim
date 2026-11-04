@@ -623,6 +623,22 @@ do
   vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config', follow = true } end, { desc = '[S]earch [N]eovim files' })
 end
 
+-- [[ Yazi file manager ]]
+do
+  -- plenary.nvim is already installed above as a Telescope dependency.
+  vim.pack.add { gh 'mikavilpas/yazi.nvim' }
+  require('yazi').setup {
+    open_for_directories = false,
+    keymaps = {
+      show_help = '<F1>',
+    },
+  }
+
+  vim.keymap.set({ 'n', 'v' }, '<leader>-', '<cmd>Yazi<CR>', { desc = 'Open [Y]azi at the current file' })
+  vim.keymap.set('n', '<leader>cw', '<cmd>Yazi cwd<CR>', { desc = 'Open Yazi in the current [W]orking directory' })
+  vim.keymap.set('n', '<C-Up>', '<cmd>Yazi toggle<CR>', { desc = 'Resume the last Yazi session' })
+end
+
 -- ============================================================
 -- SECTION 6: LSP
 -- LSP keymaps, server configuration, Mason tools installations
