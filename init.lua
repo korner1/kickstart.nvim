@@ -429,6 +429,17 @@ do
   vim.pack.add { gh 'folke/tokyonight.nvim' }
   ---@diagnostic disable-next-line: missing-fields
   require('tokyonight').setup {
+    on_colors = function(colors)
+      -- Keep Tokyo Night's accents while giving editor and floating windows a
+      -- deeper, near-black base that matches the tmux palette.
+      colors.bg = '#11151f'
+      colors.bg_dark = '#0c1018'
+      colors.bg_float = '#171c28'
+      colors.bg_highlight = '#202838'
+      colors.bg_popup = '#171c28'
+      colors.bg_sidebar = '#11151f'
+      colors.bg_statusline = '#171c28'
+    end,
     styles = {
       comments = { italic = false }, -- Disable italics in comments
     },
