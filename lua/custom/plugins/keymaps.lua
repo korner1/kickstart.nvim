@@ -5,6 +5,11 @@ vim.keymap.set('n', '<leader>qq', '<Cmd>confirm qall<CR>', {
 	silent = true,
 })
 
+vim.keymap.set('n', '<leader>td', function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	vim.diagnostic.enable(not vim.diagnostic.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
+end, { desc = '[T]oggle [D]iagnostics (buffer)' })
+
 vim.keymap.set('n', '<C-Left>', '<Cmd>vertical resize -2<CR>', {
 	desc = 'Shrink window width',
 	silent = true,
